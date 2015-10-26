@@ -64,6 +64,8 @@ namespace QuantifyMe81
             }
         }
 
+
+
         private async void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
         {
             if (PropertyChanged != null)
@@ -83,6 +85,8 @@ namespace QuantifyMe81
         {
             this.InitializeComponent();
             this.Suspending += this.OnSuspending;
+
+            Quantification = new Quantification();
         }
 
         /// <summary>

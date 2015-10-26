@@ -30,9 +30,40 @@
                 <Image x:Name="cloudImage" Margin="40,0,0,0" Height="50" Source="Assets/Cloud-Offline.png"></Image>
             </StackPanel>
             <!--<chart:SfChart3D Height="200" Width="200"/>-->
-            <ScrollViewer MinHeight="400"  VerticalScrollBarVisibility="Auto">
+            <!--<ScrollViewer MinHeight="400"  VerticalScrollBarVisibility="Auto">
                 <TextBlock TextWrapping="Wrap" Text="{Binding StatusMessage}" FontSize="16"/>
-            </ScrollViewer>
+            </ScrollViewer>-->
+            <Grid x:Name="quantificationGrid">
+                <Grid.Resources>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="FontSize" Value="33"></Setter>
+                        <Setter Property="Margin" Value="20"></Setter>
+                    </Style>
+                </Grid.Resources>
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Image Margin="0,40,0,40" Width="100" Source="Assets/Heart-ECG.png"></Image>
+                <TextBlock  Grid.Column="1" Text="{Binding HeartRate}"></TextBlock>
+
+                <TextBlock TextAlignment="Center" Grid.Row="1">X</TextBlock>
+                <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding AccelX}"></TextBlock>
+ 
+                <TextBlock TextAlignment="Center" Grid.Row="2">Y</TextBlock>
+                <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding AccelY}"></TextBlock>
+
+                <TextBlock TextAlignment="Center" Grid.Row="3">Z</TextBlock>
+                <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding AccelZ}"></TextBlock>
+
+            </Grid>
+            
         </StackPanel>
     </Grid>
 </Page>

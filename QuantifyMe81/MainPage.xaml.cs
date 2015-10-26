@@ -36,6 +36,10 @@ namespace QuantifyMe81
             this.DataContext = this.viewModel = App.Current;
 
             App.Current.MainWindow = this;
+
+            quantificationGrid.DataContext = App.Current.Quantification;
+
+
         }
 
         /// <summary>
@@ -98,7 +102,7 @@ namespace QuantifyMe81
                     bandClient.SensorManager.HeartRate.ReadingChanged += (s, args) =>
                     {
                         this.viewModel.StatusMessage = args.SensorReading.HeartRate.ToString();
-                        this.viewModel.Quantification.HearRate = args.SensorReading.HeartRate;
+                        this.viewModel.Quantification.HeartRate = args.SensorReading.HeartRate;
                     };
                     await bandClient.SensorManager.HeartRate.StartReadingsAsync();
                 }
@@ -125,8 +129,37 @@ namespace QuantifyMe81
                     bandClient.SensorManager.Accelerometer.ReadingChanged += (s, args) =>
                     {
                         this.viewModel.StatusMessage = args.SensorReading.AccelerationX.ToString();
+                        this.viewModel.Quantification.AccelX = args.SensorReading.AccelerationX;
+                        this.viewModel.Quantification.AccelY = args.SensorReading.AccelerationY;
+                        this.viewModel.Quantification.AccelZ = args.SensorReading.AccelerationZ;
+                    };
 
+                    await bandClient.SensorManager.Accelerometer.StartReadingsAsync();
+                }
 
+                bool skintempConsentGranted;
+
+                // Check whether the user has granted access to the HeartRate sensor.
+                if (bandClient.SensorManager.SkinTemperature.GetCurrentUserConsent() == UserConsent.Granted)
+                {
+                    skintempConsentGranted = true;
+                }
+                else
+                {
+                    skintempConsentGranted = await bandClient.SensorManager.SkinTemperature.RequestUserConsentAsync();
+                }
+
+                if (!skintempConsentGranted)
+                {
+                    this.viewModel.StatusMessage = "Access to the skin temp is denied.";
+                }
+                else
+                {
+                    // Subscribe to HeartRate data.
+                    bandClient.SensorManager.SkinTemperature.ReadingChanged += (s, args) =>
+                    {
+                       // this.viewModel.StatusMessage = args.SensorReading.AccelerationX.ToString();
+                        this.viewModel.Quantification.SkinTemp = args.SensorReading.Temperature;
                     };
 
                     await bandClient.SensorManager.Accelerometer.StartReadingsAsync();

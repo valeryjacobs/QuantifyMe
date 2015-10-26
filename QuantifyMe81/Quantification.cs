@@ -9,10 +9,10 @@ using Windows.ApplicationModel.Core;
 
 namespace QuantifyMe81
 {
-    public class Quantification: INotifyPropertyChanged
+    public class Quantification : INotifyPropertyChanged
     {
         private int _heartRate;
-        public int HearRate
+        public int HeartRate
         {
             get { return _heartRate; }
             set
@@ -52,7 +52,20 @@ namespace QuantifyMe81
             }
         }
 
-         public event PropertyChangedEventHandler PropertyChanged;
+        private double _skinTemp;
+
+        public double SkinTemp
+        {
+            get { return _skinTemp; }
+            set
+            {
+                _skinTemp = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+
+        public event PropertyChangedEventHandler PropertyChanged;
         private async void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
         {
             if (PropertyChanged != null)
@@ -62,7 +75,7 @@ namespace QuantifyMe81
                     PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
                 });
             }
-        }   
+        }
 
     }
 }
