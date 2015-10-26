@@ -14,6 +14,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
 using Microsoft.Band;
+using Microsoft.AspNet.SignalR.Client;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=391641
 
@@ -24,6 +25,9 @@ namespace QuantifyMe81
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        HubConnection connection;
+        IHubProxy myHub;
+
         private App viewModel;
         
         private IBandClient bandClient;
@@ -38,6 +42,25 @@ namespace QuantifyMe81
             App.Current.MainWindow = this;
 
             quantificationGrid.DataContext = App.Current.Quantification;
+
+            var connection = new HubConnection("http://192.168.178.24:5225/");
+            //Make proxy to hub based on hub name on server
+            var myHub = connection.CreateHubProxy("MyHub");
+
+            connection.Start().ContinueWith(task =>
+            {
+                if (task.IsFaulted)
+                {
+                    //Console.WriteLine("There was an error opening the connection:{0}",
+                    //                  task.Exception.GetBaseException());
+                }
+                else
+                {
+
+                    connection.Send(App.Current.Quantification);               
+                }
+
+            }).Wait();
 
 
         }
@@ -129,9 +152,9 @@ namespace QuantifyMe81
                     bandClient.SensorManager.Accelerometer.ReadingChanged += (s, args) =>
                     {
                         this.viewModel.StatusMessage = args.SensorReading.AccelerationX.ToString();
-                        this.viewModel.Quantification.AccelX = args.SensorReading.AccelerationX;
-                        this.viewModel.Quantification.AccelY = args.SensorReading.AccelerationY;
-                        this.viewModel.Quantification.AccelZ = args.SensorReading.AccelerationZ;
+                        this.viewModel.Quantification.AccelX = Math.Round(args.SensorReading.AccelerationX,2);
+                        this.viewModel.Quantification.AccelY = Math.Round(args.SensorReading.AccelerationY,2);
+                        this.viewModel.Quantification.AccelZ = Math.Round(args.SensorReading.AccelerationZ,2);
                     };
 
                     await bandClient.SensorManager.Accelerometer.StartReadingsAsync();
