@@ -15,6 +15,9 @@ using Windows.UI.Xaml.Navigation;
 
 using Microsoft.Band;
 using Microsoft.AspNet.SignalR.Client;
+using System.Net.Http;
+using Windows.System.Display;
+
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=391641
 
@@ -25,11 +28,22 @@ namespace QuantifyMe81
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        HubConnection connection;
-        IHubProxy myHub;
+        HubConnection _connection;
+        IHubProxy _myHub;
+        //Endpoint=sb://vjquantifyme.servicebus.windows.net/;SharedAccessKeyName=device;SharedAccessKey=N/mCWx+Bgj2HiAkYNhgVeB/2olm6zl4rN8NboTRZWaw=
+        //https://NAMESPACE.servicebus.windows.net/EVENTHUB-NAME/publishers/PUBLISHER-NAME/messages
+        //https://vjquantifyme.servicebus.windows.net/vjquantifyme/publishers/device/messages
+        //string sas = "SharedAccessSignature sr=https%3a%2f%2fvjtechdays.servicebus.windows.net%2fvjhubtest%2fpublishers%2fdevicea%2fmessages&sig=tiqpFPj2swppQH6d%2bdCqkDS5nbbMhgK6654eWxwJNN4%3d&se=1436347815&skn=adminpolicy";
+
+        // string sas = "SharedAccessSignature sr=https%3a%2f%2fvjquantifyme.servicebus.windows.net%2fvjquantifyme%2fpublishers%2fdevice%2fmessages&sig=tiqpFPj2swppQH6d%2bdCqkDS5nbbMhgK6654eWxwJNN4%3d&se=1436347815&skn=device";
+        //string sas = "SharedAccessSignature sr=rFFAB3DYXhJTr6NrSbEwkZdagdPDHaBzY1sZyFpGLAk=";
+        //string serviceNamespace = "vjquantifyme";
+        //string hubName = "quantifymehub";
+        //string deviceName = "device";
+        HttpClient httpClient;
 
         private App viewModel;
-        
+
         private IBandClient bandClient;
         public MainPage()
         {
@@ -43,11 +57,15 @@ namespace QuantifyMe81
 
             quantificationGrid.DataContext = App.Current.Quantification;
 
-            var connection = new HubConnection("http://192.168.178.24:5225/");
-            //Make proxy to hub based on hub name on server
-            var myHub = connection.CreateHubProxy("MyHub");
+            var dr = new DisplayRequest();
+            dr.RequestActive();
 
-            connection.Start().ContinueWith(task =>
+
+
+            _connection = new HubConnection("http://quantifymewebhub.azurewebsites.net/");
+            _myHub = _connection.CreateHubProxy("QuantifyMeHub");
+
+            _connection.Start().ContinueWith(task =>
             {
                 if (task.IsFaulted)
                 {
@@ -57,10 +75,14 @@ namespace QuantifyMe81
                 else
                 {
 
-                    connection.Send(App.Current.Quantification);               
+                    _connection.Send("Phone");
                 }
 
             }).Wait();
+
+            //httpClient = new HttpClient();
+            //httpClient.BaseAddress = new Uri(String.Format("https://{0}.servicebus.windows.net/", serviceNamespace));
+            //httpClient.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", sas);
 
 
         }
@@ -84,13 +106,19 @@ namespace QuantifyMe81
         private async void stop_Click(object sender, RoutedEventArgs e)
         {
             await bandClient.SensorManager.HeartRate.StopReadingsAsync();
+            await bandClient.SensorManager.Accelerometer.StopReadingsAsync();
+            await bandClient.SensorManager.SkinTemperature.StopReadingsAsync();
             this.viewModel.StatusMessage = "Stopped sensing.";
+
+            stop.Visibility = Visibility.Collapsed;
+            start.Visibility = Visibility.Visible;
         }
 
         private async void start_Click(object sender, RoutedEventArgs e)
         {
             try
             {
+                start.IsEnabled = false;
                 this.viewModel.StatusMessage = "Starting...";
 
                 IBandInfo[] pairedBands = await BandClientManager.Instance.GetBandsAsync();
@@ -117,15 +145,24 @@ namespace QuantifyMe81
                 if (!heartRateConsentGranted)
                 {
                     this.viewModel.StatusMessage = "Access to the heart rate sensor is denied.";
-                    
+
                 }
                 else
                 {
                     // Subscribe to HeartRate data.
                     bandClient.SensorManager.HeartRate.ReadingChanged += (s, args) =>
-                    {
-                        this.viewModel.StatusMessage = args.SensorReading.HeartRate.ToString();
-                        this.viewModel.Quantification.HeartRate = args.SensorReading.HeartRate;
+                   {
+                       this.viewModel.StatusMessage = args.SensorReading.HeartRate.ToString();
+                       this.viewModel.Quantification.HeartRate = args.SensorReading.HeartRate;
+
+                       var eventData = new
+                       {
+                           HeartRate = args.SensorReading.HeartRate,
+                           Quality = args.SensorReading.Quality == Microsoft.Band.Sensors.HeartRateQuality.Locked ? 1 : 0
+                       };
+
+                       // await httpClient.PostAsJsonAsync(String.Format("{0}/publishers/{1}/messages", hubName, deviceName), eventData);
+                       _myHub.Invoke("Send", "Phone",this.viewModel.Quantification.HeartRate);
                     };
                     await bandClient.SensorManager.HeartRate.StartReadingsAsync();
                 }
@@ -152,9 +189,9 @@ namespace QuantifyMe81
                     bandClient.SensorManager.Accelerometer.ReadingChanged += (s, args) =>
                     {
                         this.viewModel.StatusMessage = args.SensorReading.AccelerationX.ToString();
-                        this.viewModel.Quantification.AccelX = Math.Round(args.SensorReading.AccelerationX,2);
-                        this.viewModel.Quantification.AccelY = Math.Round(args.SensorReading.AccelerationY,2);
-                        this.viewModel.Quantification.AccelZ = Math.Round(args.SensorReading.AccelerationZ,2);
+                        this.viewModel.Quantification.AccelX = Math.Round(args.SensorReading.AccelerationX, 2);
+                        this.viewModel.Quantification.AccelY = Math.Round(args.SensorReading.AccelerationY, 2);
+                        this.viewModel.Quantification.AccelZ = Math.Round(args.SensorReading.AccelerationZ, 2);
                     };
 
                     await bandClient.SensorManager.Accelerometer.StartReadingsAsync();
@@ -181,12 +218,15 @@ namespace QuantifyMe81
                     // Subscribe to HeartRate data.
                     bandClient.SensorManager.SkinTemperature.ReadingChanged += (s, args) =>
                     {
-                       // this.viewModel.StatusMessage = args.SensorReading.AccelerationX.ToString();
+                        // this.viewModel.StatusMessage = args.SensorReading.AccelerationX.ToString();
                         this.viewModel.Quantification.SkinTemp = args.SensorReading.Temperature;
                     };
 
                     await bandClient.SensorManager.Accelerometer.StartReadingsAsync();
                 }
+
+                start.Visibility = Visibility.Collapsed;
+                stop.Visibility = Visibility.Visible;
             }
             catch (Exception ex)
             {

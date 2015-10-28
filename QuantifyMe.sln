@@ -7,6 +7,19 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuantifyMe", "QuantifyMe\Qu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuantifyMe81", "QuantifyMe81\QuantifyMe81.csproj", "{1104548D-B39F-47CD-963E-84BD159C697D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuantifyMeHub", "QuantifyMeHub\QuantifyMeHub.csproj", "{E00EAF03-09B9-4AA8-947F-61E003B88DBE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PublishScripts", "PublishScripts", "{29AACB9C-0912-43C7-9CDA-01F9090BABB1}"
+	ProjectSection(SolutionItems) = preProject
+		PublishScripts\AzureVMPublishModule.psm1 = PublishScripts\AzureVMPublishModule.psm1
+		PublishScripts\Publish-WebApplicationVM.ps1 = PublishScripts\Publish-WebApplicationVM.ps1
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Configurations", "Configurations", "{3E50D52A-F987-4C6E-8A19-50A49D5624C8}"
+	ProjectSection(SolutionItems) = preProject
+		PublishScripts\Configurations\QuantifyMeHub-WAWS-dev.json = PublishScripts\Configurations\QuantifyMeHub-WAWS-dev.json
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,8 +76,27 @@ Global
 		{1104548D-B39F-47CD-963E-84BD159C697D}.Release|x86.ActiveCfg = Release|x86
 		{1104548D-B39F-47CD-963E-84BD159C697D}.Release|x86.Build.0 = Release|x86
 		{1104548D-B39F-47CD-963E-84BD159C697D}.Release|x86.Deploy.0 = Release|x86
+		{E00EAF03-09B9-4AA8-947F-61E003B88DBE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E00EAF03-09B9-4AA8-947F-61E003B88DBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E00EAF03-09B9-4AA8-947F-61E003B88DBE}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{E00EAF03-09B9-4AA8-947F-61E003B88DBE}.Debug|ARM.Build.0 = Debug|Any CPU
+		{E00EAF03-09B9-4AA8-947F-61E003B88DBE}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{E00EAF03-09B9-4AA8-947F-61E003B88DBE}.Debug|x64.Build.0 = Debug|Any CPU
+		{E00EAF03-09B9-4AA8-947F-61E003B88DBE}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{E00EAF03-09B9-4AA8-947F-61E003B88DBE}.Debug|x86.Build.0 = Debug|Any CPU
+		{E00EAF03-09B9-4AA8-947F-61E003B88DBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E00EAF03-09B9-4AA8-947F-61E003B88DBE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E00EAF03-09B9-4AA8-947F-61E003B88DBE}.Release|ARM.ActiveCfg = Release|Any CPU
+		{E00EAF03-09B9-4AA8-947F-61E003B88DBE}.Release|ARM.Build.0 = Release|Any CPU
+		{E00EAF03-09B9-4AA8-947F-61E003B88DBE}.Release|x64.ActiveCfg = Release|Any CPU
+		{E00EAF03-09B9-4AA8-947F-61E003B88DBE}.Release|x64.Build.0 = Release|Any CPU
+		{E00EAF03-09B9-4AA8-947F-61E003B88DBE}.Release|x86.ActiveCfg = Release|Any CPU
+		{E00EAF03-09B9-4AA8-947F-61E003B88DBE}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{3E50D52A-F987-4C6E-8A19-50A49D5624C8} = {29AACB9C-0912-43C7-9CDA-01F9090BABB1}
 	EndGlobalSection
 EndGlobal

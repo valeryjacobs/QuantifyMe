@@ -26,8 +26,8 @@
                         <TextBlock  HorizontalAlignment="Center">Stop</TextBlock>
                     </StackPanel>
                 </Button>
-                <Image x:Name="signalImage" Margin="40,0,0,0" Height="50" Source="Assets/Signal-Bad.png"></Image>
-                <Image x:Name="cloudImage" Margin="40,0,0,0" Height="50" Source="Assets/Cloud-Offline.png"></Image>
+                <Image x:Name="signalImage" Margin="150,0,0,0" Height="30" Source="Assets/Signal-Bad.png"></Image>
+                <Image x:Name="cloudImage" Margin="40,0,0,0" Height="30" Source="Assets/Cloud-Offline.png"></Image>
             </StackPanel>
             <!--<chart:SfChart3D Height="200" Width="200"/>-->
             <!--<ScrollViewer MinHeight="400"  VerticalScrollBarVisibility="Auto">
