@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuantifyMe", "QuantifyMe\QuantifyMe.csproj", "{4545FE1F-7E47-4AFA-A6E0-CA3270345F91}"
 EndProject
@@ -19,6 +19,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Configurations", "Configura
 	ProjectSection(SolutionItems) = preProject
 		PublishScripts\Configurations\QuantifyMeHub-WAWS-dev.json = PublishScripts\Configurations\QuantifyMeHub-WAWS-dev.json
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuantifyMeDemo", "QuantifyMeDemo\QuantifyMeDemo.csproj", "{C46B96EE-A0B9-4359-8A1C-0D0D88A18D18}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -92,6 +94,26 @@ Global
 		{E00EAF03-09B9-4AA8-947F-61E003B88DBE}.Release|x64.Build.0 = Release|Any CPU
 		{E00EAF03-09B9-4AA8-947F-61E003B88DBE}.Release|x86.ActiveCfg = Release|Any CPU
 		{E00EAF03-09B9-4AA8-947F-61E003B88DBE}.Release|x86.Build.0 = Release|Any CPU
+		{C46B96EE-A0B9-4359-8A1C-0D0D88A18D18}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{C46B96EE-A0B9-4359-8A1C-0D0D88A18D18}.Debug|ARM.ActiveCfg = Debug|ARM
+		{C46B96EE-A0B9-4359-8A1C-0D0D88A18D18}.Debug|ARM.Build.0 = Debug|ARM
+		{C46B96EE-A0B9-4359-8A1C-0D0D88A18D18}.Debug|ARM.Deploy.0 = Debug|ARM
+		{C46B96EE-A0B9-4359-8A1C-0D0D88A18D18}.Debug|x64.ActiveCfg = Debug|x64
+		{C46B96EE-A0B9-4359-8A1C-0D0D88A18D18}.Debug|x64.Build.0 = Debug|x64
+		{C46B96EE-A0B9-4359-8A1C-0D0D88A18D18}.Debug|x64.Deploy.0 = Debug|x64
+		{C46B96EE-A0B9-4359-8A1C-0D0D88A18D18}.Debug|x86.ActiveCfg = Debug|x86
+		{C46B96EE-A0B9-4359-8A1C-0D0D88A18D18}.Debug|x86.Build.0 = Debug|x86
+		{C46B96EE-A0B9-4359-8A1C-0D0D88A18D18}.Debug|x86.Deploy.0 = Debug|x86
+		{C46B96EE-A0B9-4359-8A1C-0D0D88A18D18}.Release|Any CPU.ActiveCfg = Release|x86
+		{C46B96EE-A0B9-4359-8A1C-0D0D88A18D18}.Release|ARM.ActiveCfg = Release|ARM
+		{C46B96EE-A0B9-4359-8A1C-0D0D88A18D18}.Release|ARM.Build.0 = Release|ARM
+		{C46B96EE-A0B9-4359-8A1C-0D0D88A18D18}.Release|ARM.Deploy.0 = Release|ARM
+		{C46B96EE-A0B9-4359-8A1C-0D0D88A18D18}.Release|x64.ActiveCfg = Release|x64
+		{C46B96EE-A0B9-4359-8A1C-0D0D88A18D18}.Release|x64.Build.0 = Release|x64
+		{C46B96EE-A0B9-4359-8A1C-0D0D88A18D18}.Release|x64.Deploy.0 = Release|x64
+		{C46B96EE-A0B9-4359-8A1C-0D0D88A18D18}.Release|x86.ActiveCfg = Release|x86
+		{C46B96EE-A0B9-4359-8A1C-0D0D88A18D18}.Release|x86.Build.0 = Release|x86
+		{C46B96EE-A0B9-4359-8A1C-0D0D88A18D18}.Release|x86.Deploy.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

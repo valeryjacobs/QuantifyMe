@@ -99,6 +99,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+    <None Include="Properties\PublishProfiles\QuantifyMeHub - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\QuantifyMeWebHub.pubxml" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <None Include="Web.Debug.config">

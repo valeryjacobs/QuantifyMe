@@ -62,7 +62,7 @@ namespace QuantifyMe81
 
 
 
-            _connection = new HubConnection("http://quantifymewebhub.azurewebsites.net/");
+            _connection = new HubConnection("http://quantifymehub.azurewebsites.net/");
             _myHub = _connection.CreateHubProxy("QuantifyMeHub");
 
             _connection.Start().ContinueWith(task =>
